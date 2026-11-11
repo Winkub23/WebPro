@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>RecipeHub — คลังสูตรอาหารและวิธีทำ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&amp;family=Prompt:wght@300;400;500;600;700&amp;display=swap" />
+    
+    <style>
+        /* ==========================================
+           Global Theme Settings (ธีมมืด - ทองคำ)
+           ========================================== */
+        :root {
+          --bg-main: #121216;
+          --bg-card: #1e1e24;
+          --bg-card-sub: #13131a;
+          --border-color: #2d2d38;
+          --border-glow: #eab308;
+          --accent-gold: #eab308;
+          --accent-amber: #d97706;
+          --accent-cyan: #38bdf8;
+          --text-main: #e2e8f0;
+          --text-muted: #94a3b8;
+          
+          --radius-md: 12px;
+          --radius-lg: 18px;
+          --radius-full: 9999px;
+        }
+
+        body {
+          background-color: var(--bg-main) !important;
+          color: var(--text-main) !important;
+          font-family: 'Kanit', 'Prompt', system-ui, -apple-system, sans-serif !important;
+          margin: 0;
+          padding: 0;
+          line-height: 1.6;
+        }
+
+        .app-layout {
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+        }
+
+        /* Navbar Styling */
+        .header-nav {
+          position: sticky;
+          top: 0;
+          z-index: 1000;
+          background: rgba(18, 18, 22, 0.85);
+          backdrop-filter: blur(12px);
+          border-bottom: 1px solid var(--border-color);
+          padding: 16px 24px;
+        }
+
+        .nav-container {
+          max-width: 1250px;
+          margin: 0 auto;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .brand-logo {
+          font-weight: 700;
+          font-size: 1.4rem;
+          background: linear-gradient(90deg, #ffffff, var(--accent-gold));
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          letter-spacing: -0.5px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        .nav-container nav {
+          display: flex;
+          gap: 10px;
+          align-items: center;
+          flex-wrap: wrap;
+        }
+
+        .nav-container nav a {
+          color: var(--text-main);
+          text-decoration: none;
+          padding: 8px 20px;
+          background-color: var(--bg-card-sub);
+          border: 1px solid var(--border-color);
+          border-radius: var(--radius-full);
+          font-size: 0.92rem;
+          font-weight: 500;
+          transition: all 0.25s ease;
+        }
+
+        .nav-container nav a:hover {
+          background-color: #272738;
+          border-color: var(--accent-gold);
+          color: #ffffff;
+          box-shadow: 0 0 14px rgba(234, 179, 8, 0.4);
+          transform: translateY(-2px);
+        }
+
+        /* Main Content &amp; Hero */
+        .main-content {
+          max-width: 1250px;
+          width: 100%;
+          margin: 0 auto;
+          padding: 40px 20px;
+          box-sizing: border-box;
+        }
+
+        .hero-section {
+          text-align: center;
+          margin-bottom: 40px;
+        }
+
+        .hero-section h2 {
+          font-size: 2.2rem;
+          margin: 0 0 10px 0;
+          background: linear-gradient(90deg, #ffffff, #fef08a);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          display: inline-block;
+        }
+
+        .subtitle {
+          color: var(--text-muted);
+          font-size: 1.05rem;
+          margin: 0 0 30px 0;
+        }
+
+        /* Search &amp; Filter Component */
+        .search-filter-wrapper {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+          align-items: center;
+          max-width: 650px;
+          margin: 0 auto;
+        }
+
+        .search-wrapper {
+          position: relative;
+          width: 100%;
+        }
+
+        .search-icon {
+          position: absolute;
+          left: 18px;
+          top: 50%;
+          transform: translateY(-50%);
+          color: var(--text-muted);
+          z-index: 2;
+        }
+
+        .search-input {
+          width: 100%;
+          box-sizing: border-box;
+          padding: 14px 45px 14px 50px !important;
+          background-color: var(--bg-card) !important;
+          border: 1px solid var(--border-color) !important;
+          border-radius: var(--radius-full) !important;
+          color: var(--text-main) !important;
+          font-size: 1rem !important;
+          outline: none;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+          transition: all 0.25s ease;
+        }
+
+        .search-input:focus {
+          border-color: var(--accent-gold) !important;
+          box-shadow: 0 0 18px rgba(234, 179, 8, 0.35) !important;
+          background-color: var(--bg-card-sub) !important;
+        }
+
+        /* Filter Chips Buttons */
+        .filter-group {
+          display: flex;
+          gap: 10px;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
+        .filter-group .ui-button {
+          background-color: var(--bg-card) !important;
+          border: 1px solid var(--border-color) !important;
+          color: var(--text-muted) !important;
+          padding: 8px 20px !important;
+          border-radius: var(--radius-full) !important;
+          font-size: 0.95rem !important;
+          font-weight: 500 !important;
+          transition: all 0.25s ease !important;
+        }
+
+        .filter-group .ui-button:hover {
+          border-color: var(--accent-gold) !important;
+          color: var(--text-main) !important;
+        }
+
+        .filter-group .ui-button.ui-state-active {
+          background: linear-gradient(135deg, var(--accent-gold), var(--accent-amber)) !important;
+          color: #121216 !important;
+          font-weight: bold !important;
+          border-color: var(--accent-gold) !important;
+          box-shadow: 0 4px 14px rgba(234, 179, 8, 0.4) !important;
+        }
+
+        /* ==========================================
+           FIX: ปรับแต่ง PrimeFaces DataView ให้แสดงเป็น Grid ข้างกัน
+           ========================================== */
+        .recipe-grid {
+          width: 100% !important;
+          background: transparent !important;
+          border: none !important;
+        }
+
+        .recipe-grid .ui-dataview-header {
+          display: none !important;
+        }
+
+        .recipe-grid .ui-dataview-content {
+          background: transparent !important;
+          border: none !important;
+          padding: 0 !important;
+        }
+
+        /* บังคับคอลัมน์ภายใน DataView ให้จัดวางด้วย CSS Grid */
+        .recipe-grid .ui-dataview-content > div,
+        .recipe-grid .ui-dataview-grid {
+          display: grid !important;
+          grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)) !important;
+          gap: 25px !important;
+          width: 100% !important;
+          margin: 0 !important;
+        }
+
+        .recipe-grid .ui-dataview-content .ui-g-12,
+        .recipe-grid .ui-dataview-content .ui-md-4,
+        .recipe-grid .ui-dataview-content .ui-col {
+          width: 100% !important;
+          padding: 0 !important;
+          float: none !important;
+        }
+
+        /* Recipe Card */
+        .recipe-card {
+          background-color: var(--bg-card);
+          border: 1px solid var(--border-color);
+          border-radius: var(--radius-lg);
+          overflow: hidden;
+          cursor: pointer;
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+          transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+        }
+
+        .recipe-card:hover {
+          transform: translateY(-5px);
+          border-color: var(--border-glow);
+          box-shadow: 0 8px 22px rgba(234, 179, 8, 0.35);
+        }
+
+        .card-image-wrapper {
+          position: relative;
+          width: 100%;
+          height: 200px;
+          overflow: hidden;
+          background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .card-image-wrapper img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.35s ease;
+        }
+
+        .recipe-card:hover .card-image-wrapper img {
+          transform: scale(1.06);
+        }
+
+        .category-badge {
+          position: absolute;
+          top: 12px;
+          left: 12px;
+          background: rgba(18, 18, 22, 0.85);
+          backdrop-filter: blur(8px);
+          border: 1px solid var(--border-color);
+          padding: 4px 12px;
+          border-radius: var(--radius-full);
+          font-size: 0.8rem;
+          color: var(--accent-gold);
+          font-weight: 500;
+          z-index: 4;
+        }
+
+        .card-bookmark-btn {
+          position: absolute;
+          top: 12px;
+          right: 12px;
+          background: rgba(18, 18, 22, 0.85);
+          backdrop-filter: blur(8px);
+          border: 1px solid var(--border-color);
+          color: var(--text-muted);
+          width: 34px;
+          height: 34px;
+          border-radius: 50%;
+          font-size: 1.1rem;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.25s ease;
+          z-index: 5;
+        }
+
+        .card-bookmark-btn:hover {
+          border-color: var(--accent-gold);
+          color: var(--accent-gold);
+          transform: scale(1.1);
+        }
+
+        .card-bookmark-btn.active {
+          color: var(--accent-gold);
+          border-color: var(--accent-gold);
+          box-shadow: 0 0 10px rgba(234, 179, 8, 0.5);
+        }
+
+        .card-content {
+          padding: 18px 16px;
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          flex-grow: 1;
+        }
+
+        .card-title {
+          margin: 0 0 8px 0;
+          font-size: 1.05rem;
+          font-weight: 600;
+          color: #ffffff;
+        }
+
+        .card-desc {
+          color: var(--text-muted);
+          font-size: 0.88rem;
+          margin: 0 0 16px 0;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          line-height: 1.5;
+        }
+
+        .btn-card-detail {
+          background: linear-gradient(135deg, var(--accent-gold), var(--accent-amber)) !important;
+          color: #121216 !important;
+          border: none !important;
+          padding: 8px 16px !important;
+          border-radius: var(--radius-full) !important;
+          font-weight: 600 !important;
+          font-size: 0.88rem !important;
+          margin-top: auto;
+          width: 100%;
+        }
+
+        /* PrimeFaces Modal Dialog Override */
+        .ui-dialog {
+          background-color: var(--bg-card) !important;
+          color: var(--text-main) !important;
+          border-radius: 18px !important;
+          border: 1px solid var(--border-color) !important;
+          box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7) !important;
+        }
+
+        .ui-dialog-titlebar {
+          background-color: transparent !important;
+          border-bottom: 1px solid var(--border-color) !important;
+          color: #ffffff !important;
+        }
+
+        .ui-dialog-content {
+          background-color: transparent !important;
+          color: var(--text-main) !important;
+          padding: 24px !important;
+        }
+
+        .modal-content h3 {
+          text-align: center;
+          color: var(--accent-gold);
+          margin-top: 24px;
+          margin-bottom: 14px;
+        }
+
+        /* วัตถุดิบ 2 คอลัมน์ */
+        .detail-ingredients {
+          columns: 2 220px;
+          column-gap: 32px;
+          margin: 0 auto 24px auto;
+          padding-left: 24px;
+          max-width: 560px;
+          text-align: left;
+        }
+
+        .detail-ingredients li {
+          break-inside: avoid;
+          margin-bottom: 10px;
+          color: var(--text-main);
+          line-height: 1.5;
+          font-size: 0.98rem;
+        }
+
+        /* วิธีทำ */
+        .detail-steps {
+          display: table;
+          margin: 0 auto 24px auto;
+          text-align: left;
+          padding-left: 24px;
+          max-width: 650px;
+        }
+
+        .detail-steps li {
+          margin-bottom: 12px;
+          color: var(--text-main);
+          line-height: 1.6;
+        }
+
+        /* Scroll To Top Button */
+        .scroll-to-top {
+          position: fixed;
+          bottom: 25px;
+          right: 25px;
+          background: linear-gradient(135deg, var(--accent-gold), var(--accent-amber));
+          color: #121216 !important;
+          padding: 12px 20px;
+          border-radius: 30px;
+          text-decoration: none !important;
+          font-weight: bold;
+          font-size: 0.9rem;
+          box-shadow: 0 4px 15px rgba(234, 179, 8, 0.4);
+          transition: transform 0.25s ease, box-shadow 0.25s ease;
+          z-index: 1000;
+          display: inline-block;
+        }
+
+        .scroll-to-top:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 6px 20px rgba(217, 119, 6, 0.6);
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <div class="app-layout">
+        <h:form id="mainForm">
+            <p:growl id="messages" showDetail="true" />
+
+            <!-- Header &amp; Navigation -->
+            <header class="header-nav">
+                <div class="nav-container">
+                    <span class="brand-logo">
+                        <i class="pi pi-book" style="font-size: 1.3rem;"></i> RecipeHub
+                    </span>
+                    <nav>
+                        <a href="#home">หน้าแรก</a>
+                        <a href="#product">สินค้า</a>
+                        <a href="#service">บริการ</a>
+                        <a href="#about">เกี่ยวกับเรา</a>
+                    </nav>
+                </div>
+            </header>
+
+            <!-- Main Content Section -->
+            <main class="main-content">
+                <section id="home" class="hero-section">
+                    <h2>คลังสูตรอาหารและวิธีทำ</h2>
+                    <p class="subtitle">ค้นหาไอเดียเมนูโปรด หรือแบ่งปันสูตรอาหารของคุณได้ที่นี่</p>
+
+                    <!-- Search &amp; Filter Component -->
+                    <div class="search-filter-wrapper">
+                        <div class="search-wrapper">
+                            <i class="pi pi-search search-icon"></i>
+                            <p:inputText value="#{recipeBean.searchQuery}" 
+                                         placeholder="ค้นหาเมนู หรือวัตถุดิบ..." 
+                                         styleClass="search-input">
+                                <p:ajax event="keyup" listener="#{recipeBean.filterRecipes}" update="recipeGrid" delay="300" />
+                            </p:inputText>
+                        </div>
+
+                        <!-- Category Filter Chips -->
+                        <div class="filter-group">
+                            <p:selectOneButton value="#{recipeBean.selectedCategory}">
+                                <f:selectItem itemLabel="ทั้งหมด" itemValue="0" />
+                                <f:selectItems value="#{recipeBean.categories}" var="cat" itemLabel="#{cat.name}" itemValue="#{cat.id}" />
+                                <p:ajax listener="#{recipeBean.filterRecipes}" update="recipeGrid" />
+                            </p:selectOneButton>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Recipe Cards Grid Section -->
+                <p:dataView id="recipeGrid" var="recipe" value="#{recipeBean.filteredRecipes}" layout="grid" styleClass="recipe-grid">
+                    <p:dataViewGridItem>
+                        <div class="recipe-card">
+                            <div class="card-image-wrapper">
+                                <span class="category-badge">#{recipe.categoryName}</span>
+                                
+                                <!-- Bookmark Star Button -->
+                                <button type="button" 
+                                        class="card-bookmark-btn #{recipeBean.isBookmarked(recipe.id) ? 'active' : ''}"
+                                        onclick="PF('bookmarkAction').show();">
+                                    ★
+                                </button>
+
+                                <h:panelGroup rendered="#{not empty recipe.image}">
+                                    <img src="#{recipe.image}" alt="#{recipe.title}" />
+                                </h:panelGroup>
+                                <h:panelGroup rendered="#{empty recipe.image}">
+                                    <div style="text-align: center; color: var(--text-muted);">
+                                        <i class="pi pi-image" style="font-size: 2.5rem; opacity: 0.4;"></i>
+                                        <div style="font-size: 0.8rem; margin-top: 4px; opacity: 0.6;">ไม่มีรูปภาพ</div>
+                                    </div>
+                                </h:panelGroup>
+                            </div>
+
+                            <div class="card-content">
+                                <h3 class="card-title">#{recipe.title}</h3>
+                                <p class="card-desc">#{recipe.description}</p>
+                                
+                                <p:commandButton value="ดูรายละเอียด" 
+                                                 icon="pi pi-eye" 
+                                                 actionListener="#{recipeBean.selectRecipe(recipe.id)}" 
+                                                 update=":mainForm:detailOutput" 
+                                                 oncomplete="PF('detailDialog').show()" 
+                                                 styleClass="btn-card-detail" />
+                            </div>
+                        </div>
+                    </p:dataViewGridItem>
+                </p:dataView>
+            </main>
+
+            <!-- Recipe Detail Modal Dialog -->
+            <p:dialog header="#{recipeBean.selectedRecipe.title}" widgetVar="detailDialog" modal="true" width="620" responsive="true">
+                <p:outputPanel id="detailOutput" styleClass="modal-content" style="padding:0; border:none; box-shadow:none;">
+                    <h:panelGroup rendered="#{not empty recipeBean.selectedRecipe}">
+                        <div style="border-radius: var(--radius-md); overflow: hidden; margin-bottom: 1.2rem; max-height: 250px; background: #0f172a;">
+                            <h:panelGroup rendered="#{not empty recipeBean.selectedRecipe.image}">
+                                <img src="#{recipeBean.selectedRecipe.image}" style="width: 100%; height: 250px; object-fit: cover;" />
+                            </h:panelGroup>
+                        </div>
+
+                        <p style="color: var(--text-muted); text-align: center; line-height: 1.5; margin-bottom: 1.5rem;">
+                            #{recipeBean.selectedRecipe.description}
+                        </p>
+
+                        <h3>วัตถุดิบ</h3>
+                        <ul class="detail-ingredients">
+                            <ui:repeat value="#{recipeBean.selectedRecipe.ingredients}" var="ing">
+                                <li>#{ing.name} — <strong>#{ing.amount}</strong></li>
+                            </ui:repeat>
+                        </ul>
+
+                        <h3>วิธีทำ</h3>
+                        <ol class="detail-steps">
+                            <ui:repeat value="#{recipeBean.selectedRecipe.steps}" var="step">
+                                <li>#{step}</li>
+                            </ui:repeat>
+                        </ol>
+                    </h:panelGroup>
+                </p:outputPanel>
+            </p:dialog>
+
+            <!-- Scroll to Top Button -->
+            <a href="#home" class="scroll-to-top">▲ Up!</a>
+        </h:form>
+    </div>
+</h:body>
+</html>

@@ -1,0 +1,1146 @@
+/* ==========================================
+   Global Theme Settings (ธีมหลักสีมืด - ทองคำ)
+   ========================================== */
+:root {
+  --bg-main: #121216;         /* พื้นหลังหลักของเว็บ */
+  --bg-card: #1e1e24;         /* พื้นหลังการ์ด/กล่องเนื้อหา */
+  --bg-card-sub: #13131a;     /* พื้นหลังองค์ประกอบย่อย */
+  --border-color: #2d2d38;    /* สีเส้นกรอบแบบซอฟต์ */
+  --border-glow: #eab308;     /* สีเรืองแสงเวลา Hover (สีทอง) */
+  --accent-gold: #eab308;     /* สีทองนีออนสว่าง */
+  --accent-amber: #d97706;    /* สีทองเข้มอำพัน */
+  --accent-cyan: #38bdf8;     /* สีฟ้าสว่าง */
+  --text-main: #e2e8f0;       /* สีข้อความหลัก */
+  --text-muted: #94a3b8;      /* สีข้อความรอง */
+  
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-full: 9999px;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: 'Kanit', 'Prompt', system-ui, -apple-system, sans-serif;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+}
+
+.app-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================
+   Header & Navigation (แถบเมนูหลักด้านบน)
+   ========================================== */
+.header-nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(18, 18, 22, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-color);
+  padding: 16px 24px;
+}
+
+.nav-container {
+  max-width: 1250px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand-logo {
+  font-weight: 700;
+  font-size: 1.4rem;
+  background: linear-gradient(90deg, #ffffff, var(--accent-gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.5px;
+}
+
+.nav-container nav {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.nav-container nav a {
+  color: var(--text-main);
+  text-decoration: none;
+  padding: 8px 20px;
+  background-color: var(--bg-card-sub);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  font-size: 0.92rem;
+  font-weight: 500;
+  transition: all 0.25s ease;
+}
+
+.nav-container nav a:hover {
+  background-color: #272738;
+  border-color: var(--accent-gold);
+  color: #ffffff;
+  box-shadow: 0 0 14px rgba(234, 179, 8, 0.4);
+  transform: translateY(-2px);
+}
+
+/* ==========================================
+   Main Content & Hero Section
+   ========================================== */
+.main-content {
+  max-width: 1250px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px 20px;
+  box-sizing: border-box;
+}
+
+.hero-section {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.hero-section h2 {
+  font-size: 2.2rem;
+  margin: 0 0 10px 0;
+  background: linear-gradient(90deg, #ffffff, #fef08a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  margin: 0 0 30px 0;
+}
+
+/* ==========================================
+   Search & Filter Component
+   ========================================== */
+.search-filter-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+/* กล่องป้อนคำค้นหา */
+.search-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.search-icon {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 14px 45px 14px 50px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  color: var(--text-main);
+  font-size: 1rem;
+  outline: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  transition: all 0.25s ease;
+}
+
+.search-input:focus {
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 18px rgba(234, 179, 8, 0.35);
+  background-color: var(--bg-card-sub);
+}
+
+.search-input::placeholder {
+  color: var(--text-muted);
+}
+
+.clear-button {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s ease;
+}
+
+.clear-button:hover {
+  color: var(--accent-gold);
+}
+
+/* ปุ่มกรองหมวดหมู่ (Filter Chips) */
+.filter-group {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.filter-chip {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  padding: 8px 20px;
+  border-radius: var(--radius-full);
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.filter-chip:hover {
+  border-color: var(--accent-gold);
+  color: var(--text-main);
+}
+
+.filter-chip.active {
+  background: linear-gradient(135deg, var(--accent-gold), var(--accent-amber));
+  color: #121216;
+  font-weight: bold;
+  border-color: var(--accent-gold);
+  box-shadow: 0 4px 14px rgba(234, 179, 8, 0.4);
+}
+
+/* ==========================================
+   Recipe Grid & Cards
+   ========================================== */
+.recipe-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 25px;
+  margin-top: 20px;
+}
+
+.recipe-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.recipe-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--border-glow);
+  box-shadow: 0 8px 22px rgba(234, 179, 8, 0.35);
+}
+
+.card-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.card-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.recipe-card:hover .card-image-wrapper img {
+  transform: scale(1.06);
+}
+
+.category-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(18, 18, 22, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-color);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  color: var(--accent-gold);
+  font-weight: 500;
+}
+
+.card-content {
+  padding: 18px 16px;
+  text-align: center;
+}
+
+.card-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* ==========================================
+   State Messages & Empty State
+   ========================================== */
+.state-message {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
+.state-message.error {
+  color: #ef4444;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 50px 20px;
+  background-color: var(--bg-card);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius-lg);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.empty-state p {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+.btn-secondary {
+  background-color: var(--bg-card-sub);
+  color: var(--accent-gold);
+  border: 1px solid var(--accent-gold);
+  padding: 10px 22px;
+  border-radius: var(--radius-full);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-secondary:hover {
+  background-color: var(--accent-gold);
+  color: #121216;
+  font-weight: bold;
+  box-shadow: 0 0 14px rgba(234, 179, 8, 0.4);
+}
+
+/* ==========================================
+   Fix: จัดรายการวัตถุดิบและวิธีทำใน Modal ให้อยู่ติดกัน
+   ========================================== */
+.modal-content h3 {
+  text-align: center;
+  color: var(--accent-gold);
+  margin-top: 24px;
+  margin-bottom: 14px;
+}
+
+/* ==========================================
+   Fix: จัดวัตถุดิบเป็น 2 คอลัมน์คู่กัน (Multi-column)
+   ========================================== */
+.modal-content ul {
+  columns: 2 220px;        /* แบ่งเป็น 2 คอลัมน์ (กว้างขั้นต่ำคอลัมน์ละ 220px) */
+  column-gap: 32px;        /* ระยะห่างระหว่างคอลัมน์ซ้าย-ขวา */
+  margin: 0 auto 24px auto;
+  padding-left: 24px;
+  max-width: 560px;        /* จำกัดความกว้างรวมของบล็อก */
+  text-align: left;
+}
+
+.modal-content ul li {
+  break-inside: avoid;     /* ป้องกันไม่ให้บรรทัดโดนตัดแยกข้ามคอลัมน์ */
+  margin-bottom: 10px;
+  color: var(--text-main);
+  line-height: 1.5;
+  font-size: 0.98rem;
+}
+
+/* วิธีทำ (ol) ยังคงไว้เป็น 1 คอลัมน์ตามลำดับ 1, 2, 3 */
+.modal-content ol {
+  display: table;
+  margin: 0 auto 24px auto;
+  text-align: left;
+  padding-left: 24px;
+}
+
+.modal-content ol li {
+  margin-bottom: 10px;
+  color: var(--text-main);
+  line-height: 1.6;
+}
+
+/* ==========================================
+   Add Recipe Form Styling (ธีมมืด-ทอง)
+   ========================================== */
+.btn-add-recipe {
+  background: linear-gradient(135deg, var(--accent-gold), var(--accent-amber));
+  color: #121216;
+  border: none;
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  margin-left: 10px;
+}
+
+.btn-add-recipe:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(234, 179, 8, 0.4);
+}
+
+.form-modal {
+  max-width: 620px;
+  width: 90%;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+}
+
+.modal-header h3 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 1.3rem;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: var(--accent-gold);
+}
+
+.recipe-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+}
+
+.form-group label,
+.section-title-bar label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-main);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea,
+.dynamic-row input {
+  background-color: var(--bg-card-sub);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  color: var(--text-main);
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus,
+.dynamic-row input:focus {
+  border-color: var(--accent-gold);
+}
+
+.form-img-preview {
+  width: 100%;
+  max-height: 180px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  margin-top: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+}
+
+.section-title-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-add-item {
+  background: transparent;
+  border: 1px solid var(--accent-gold);
+  color: var(--accent-gold);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.btn-add-item:hover {
+  background-color: var(--accent-gold);
+  color: #121216;
+}
+
+.dynamic-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.dynamic-row input {
+  flex: 1;
+}
+
+.step-num {
+  font-weight: bold;
+  color: var(--accent-gold);
+  width: 20px;
+}
+
+.btn-remove-item {
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid #ef4444;
+  color: #ef4444;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.btn-remove-item:hover {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 10px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-color);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent-gold), var(--accent-amber));
+  color: #121216;
+  border: none;
+  padding: 10px 22px;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  box-shadow: 0 4px 14px rgba(234, 179, 8, 0.4);
+}
+
+/* ==========================================
+   Modal Background & Container (สิ่งสำคัญที่ขาดไป)
+   ========================================== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(10, 10, 14, 0.85);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-content {
+  background-color: var(--bg-card);
+  color: var(--text-main);
+  width: 90%;
+  max-width: 680px;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 32px;
+  border-radius: 18px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+  position: relative;
+  text-align: left;
+}
+
+/* ==========================================
+   Add Recipe Form Styling
+   ========================================== */
+.btn-add-recipe {
+  background: linear-gradient(135deg, var(--accent-gold), var(--accent-amber));
+  color: #121216;
+  border: none;
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  margin-left: 10px;
+}
+
+.btn-add-recipe:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(234, 179, 8, 0.4);
+}
+
+.form-modal {
+  max-width: 620px;
+  width: 90%;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+}
+
+.modal-header h3 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 1.3rem;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: var(--accent-gold);
+}
+
+.recipe-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+}
+
+.form-group label,
+.section-title-bar label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-main);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea,
+.dynamic-row input {
+  background-color: var(--bg-card-sub);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  color: var(--text-main);
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus,
+.dynamic-row input:focus {
+  border-color: var(--accent-gold);
+}
+
+.form-img-preview {
+  width: 100%;
+  max-height: 180px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  margin-top: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+}
+
+.section-title-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-add-item {
+  background: transparent;
+  border: 1px solid var(--accent-gold);
+  color: var(--accent-gold);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.btn-add-item:hover {
+  background-color: var(--accent-gold);
+  color: #121216;
+}
+
+.dynamic-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.dynamic-row input {
+  flex: 1;
+}
+
+.step-num {
+  font-weight: bold;
+  color: var(--accent-gold);
+  width: 20px;
+}
+
+.btn-remove-item {
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid #ef4444;
+  color: #ef4444;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.btn-remove-item:hover {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 10px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-color);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent-gold), var(--accent-amber));
+  color: #121216;
+  border: none;
+  padding: 10px 22px;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  box-shadow: 0 4px 14px rgba(234, 179, 8, 0.4);
+}
+
+/* ==========================================
+   Custom File Upload & Actions Alignment
+   ========================================== */
+.custom-file-upload {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--bg-card-sub);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+  gap: 12px;
+}
+
+.file-name-text {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+  text-align: left;
+}
+
+.file-upload-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* ปุ่ม Choose File อยู่ฝั่งขวา */
+.btn-choose-file {
+  background-color: #334155;
+  color: var(--text-main);
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.btn-choose-file:hover {
+  background-color: #475569;
+  color: #ffffff;
+  border-color: var(--accent-gold);
+}
+
+/* ปุ่มลบรูป */
+.btn-remove-image {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  border: 1px solid #ef4444;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-remove-image:hover {
+  background-color: #ef4444;
+  color: #ffffff;
+}
+
+.image-preview-wrapper {
+  margin-top: 10px;
+}
+
+.form-img-preview {
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  display: block;
+}
+
+/* ==========================================
+   Recipe Detail Inline Section (แสดงด้านล่าง)
+   ========================================== */
+.recipe-detail-section {
+  margin-top: 50px;
+  padding: 35px 30px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--accent-gold);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 10px 30px rgba(234, 179, 8, 0.15);
+  text-align: center;
+  scroll-margin-top: 90px; /* เว้นระยะจาก Header Sticky เวลาเลื่อนลงมา */
+}
+
+.detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.detail-header h2 {
+  font-size: 1.8rem;
+  color: #ffffff;
+  margin: 0;
+}
+
+.btn-close-detail {
+  background-color: var(--bg-card-sub);
+  color: var(--text-muted);
+  border: 1px solid var(--border-color);
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-close-detail:hover {
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+.detail-img {
+  width: 100%;
+  max-width: 600px;
+  max-height: 350px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  margin: 0 auto 20px auto;
+  display: block;
+}
+
+.detail-description {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  max-width: 700px;
+  margin: 0 auto 20px auto;
+}
+
+.recipe-detail-section h3 {
+  color: var(--accent-gold);
+  font-size: 1.3rem;
+  margin-top: 24px;
+  margin-bottom: 16px;
+}
+
+/* วัตถุดิบแบ่ง 2 คอลัมน์ */
+.detail-ingredients {
+  columns: 2 220px;
+  column-gap: 32px;
+  margin: 0 auto 24px auto;
+  padding-left: 24px;
+  max-width: 560px;
+  text-align: left;
+}
+
+.detail-ingredients li {
+  break-inside: avoid;
+  margin-bottom: 10px;
+  color: var(--text-main);
+  line-height: 1.5;
+  font-size: 0.98rem;
+}
+
+.detail-ingredients li strong {
+  color: var(--text-main);
+  font-weight: 500;
+}
+
+/* วิธีทำเรียงลำดับ */
+.detail-steps {
+  display: table;
+  margin: 0 auto 24px auto;
+  text-align: left;
+  padding-left: 24px;
+  max-width: 650px;
+}
+
+.detail-steps li {
+  margin-bottom: 12px;
+  color: var(--text-main);
+  line-height: 1.6;
+}
+
+/* ==========================================
+   Scroll To Top Button (ปุ่มกลับขึ้นด้านบนแบบดั้งเดิม)
+   ========================================== */
+.scroll-to-top {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background: linear-gradient(135deg, var(--accent-gold), var(--accent-amber));
+  color: #121216 !important;
+  padding: 12px 20px;
+  border-radius: 30px;
+  text-decoration: none !important;
+  font-weight: bold;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 15px rgba(234, 179, 8, 0.4);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  z-index: 1000;
+  display: inline-block;
+}
+
+.scroll-to-top:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(217, 119, 6, 0.6);
+  color: #121216 !important;
+}
+
+/* ==========================================
+   Bookmark & Favorites Styling
+   ========================================== */
+
+/* ปุ่มดาวบนการ์ดสูตรอาหาร (ขวาบน) */
+.card-bookmark-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(18, 18, 22, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  z-index: 5;
+}
+
+.card-bookmark-btn:hover {
+  border-color: var(--accent-gold);
+  color: var(--accent-gold);
+  transform: scale(1.1);
+}
+
+.card-bookmark-btn.active {
+  color: var(--accent-gold);
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 10px rgba(234, 179, 8, 0.5);
+}
+
+/* ปุ่ม Filter กรองเฉพาะสูตรโปรด */
+.filter-chip.bookmark-chip {
+  border-color: var(--accent-gold);
+  color: var(--accent-gold);
+}
+
+.filter-chip.bookmark-chip.active {
+  background: linear-gradient(135deg, var(--accent-gold), var(--accent-amber));
+  color: #121216;
+}
+
+/* ==========================================
+   Auth & User Roles Navigation Styling
+   ========================================== */
+
+.btn-login-nav {
+  background: transparent;
+  color: var(--accent-gold);
+  border: 1px solid var(--accent-gold);
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  margin-left: 10px;
+}
+
+.btn-login-nav:hover {
+  background-color: var(--accent-gold);
+  color: #121216;
+}
+
+.user-profile-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--bg-card-sub);
+  border: 1px solid var(--border-color);
+  padding: 4px 14px;
+  border-radius: var(--radius-full);
+  margin-left: 10px;
+}
+
+.user-name {
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.admin-tag {
+  background-color: #ef4444;
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.btn-logout {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 4px 6px;
+  transition: color 0.2s ease;
+}
+
+.btn-logout:hover {
+  color: #ef4444;
+}
+
+/* Auth Modal Styling */
+.auth-modal {
+  max-width: 420px;
+}
+
+.auth-error {
+  background-color: rgba(239, 68, 68, 0.15);
+  border: 1px solid #ef4444;
+  color: #ef4444;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.auth-submit-btn {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.auth-toggle-footer {
+  margin-top: 20px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.auth-toggle-footer button {
+  background: transparent;
+  border: none;
+  color: var(--accent-gold);
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-left: 4px;
+}

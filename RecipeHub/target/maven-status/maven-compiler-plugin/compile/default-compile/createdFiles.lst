@@ -1,0 +1,8 @@
+com\recipehub\resources\JakartaEE10Resource.class
+com\recipehub\bean\RecipeBean$Ingredient.class
+com\recipehub\bean\RecipeBean$Category.class
+com\recipehub\bean\RecipeBean$Recipe.class
+com\recipehub\bean\RecipeBean.class
+com\recipehub\JakartaRestConfiguration.class
+com\recipehub\util\DBConnection.class
+com\recipehub\bean\AuthBean.class
